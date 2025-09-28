@@ -1,0 +1,40 @@
+/* ===== Text Colors ===== */
+.text-primary   { color: #0d6efd !important; }
+.text-secondary { color: #6c757d !important; }
+.text-success   { color: #198754 !important; }
+.text-danger    { color: #dc3545 !important; }
+.text-warning   { color: #ffc107 !important; }
+.text-info      { color: #0dcaf0 !important; }
+.text-light     { color: #f8f9fa !important; }
+.text-dark      { color: #212529 !important; }
+.text-body      { color: #212529 !important; }
+.text-muted     { color: #6c757d !important; }
+.text-white     { color: #fff !important; }
+
+/* ===== Background Colors ===== */
+.bg-primary   { background-color: #0d6efd !important; color: #fff !important; }
+.bg-secondary { background-color: #6c757d !important; color: #fff !important; }
+.bg-success   { background-color: #198754 !important; color: #fff !important; }
+.bg-danger    { background-color: #dc3545 !important; color: #fff !important; }
+.bg-warning   { background-color: #ffc107 !important; color: #212529 !important; }
+.bg-info      { background-color: #0dcaf0 !important; color: #212529 !important; }
+.bg-light     { background-color: #f8f9fa !important; color: #212529 !important; }
+.bg-dark      { background-color: #212529 !important; color: #fff !important; }
+.bg-white     { background-color: #fff !important; color: #212529 !important; }
+
+/* ===== Border Colors ===== */
+.border-primary   { border-color: #0d6efd !important; }
+.border-secondary { border-color: #6c757d !important; }
+.border-success   { border-color: #198754 !important; }
+.border-danger    { border-color: #dc3545 !important; }
+.border-warning   { border-color: #ffc107 !important; }
+.border-info      { border-color: #0dcaf0 !important; }
+.border-light     { border-color: #f8f9fa !important; }
+.border-dark      { border-color: #212529 !important; }
+.border-white     { border-color: #fff !important; }
+
+/* ===== Hover Utilities (optional) ===== */
+.hover-primary:hover   { color: #0d6efd !important; }
+.hover-danger:hover    { color: #dc3545 !important; }
+.hover-success:hover   { color: #198754 !important; }
+.hover-warning:hover   { color: #ffc107 !important; }

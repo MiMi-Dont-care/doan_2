@@ -1,0 +1,96 @@
+/* ===== Form Control ===== */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Disabled & Readonly */
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #e9ecef;
+  opacity: 1;
+}
+
+/* ===== Label ===== */
+.form-label {
+  display: inline-block;
+  margin-bottom: .5rem;
+  font-weight: 500;
+}
+
+/* ===== Select ===== */
+.form-select {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23212529' d='M2 0L0 2h4L2 0zM2 5l2-2H0l2 2z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 8px 10px;
+}
+
+.form-select:focus {
+  border-color: #0d6efd;
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(13, 110, 253, 0.25);
+}
+
+/* ===== Checkbox & Radio ===== */
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-bottom: .5rem;
+}
+
+.form-check-input {
+  width: 1rem;
+  height: 1rem;
+  margin-right: .5rem;
+}
+
+.form-check-label {
+  margin-bottom: 0;
+}
+
+/* ===== Validation ===== */
+.is-valid {
+  border-color: #198754 !important;
+}
+.is-valid:focus {
+  box-shadow: 0 0 0 .2rem rgba(25, 135, 84, 0.25);
+}
+
+.is-invalid {
+  border-color: #dc3545 !important;
+}
+.is-invalid:focus {
+  box-shadow: 0 0 0 .2rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: .875rem;
+  margin-top: .25rem;
+}

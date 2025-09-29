@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết cửa hàng - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/store.css">
+  <link rel="stylesheet" href="../css/form.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="logo">Mì Cay Đức Hiệu - Admin</div>
+    <div class="user-menu">
+      <i class="fas fa-user-circle"></i> Admin
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <ul>
+      <li><i class="fas fa-chart-line"></i> Dashboard</li>
+      <li class="active"><i class="fas fa-store"></i> Quản lý cửa hàng</li>
+      <li><i class="fas fa-file-contract"></i> Hợp đồng</li>
+      <li><i class="fas fa-dollar-sign"></i> Doanh thu</li>
+      <li><i class="fas fa-tags"></i> Khuyến mãi</li>
+      <li class="has-submenu">
+        <div class="submenu-toggle">
+          <i class="fas fa-chart-pie"></i> Báo cáo
+          <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <ul class="submenu">
+          <li><i class="fas fa-calendar-day"></i> Theo ngày / tháng</li>
+          <li><i class="fas fa-store-alt"></i> Theo cửa hàng</li>
+        </ul>
+      </li>
+      <li><i class="fas fa-users"></i> Người dùng</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <h1 class="fs-2 fw-bold mb-3">Chi tiết cửa hàng</h1>
+    <div id="storeDetail" class="store-detail"></div>
+
+    <div class="form-actions mt-3">
+      <a href="store.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
+      <a href="#" id="btnEdit" class="btn btn-warning"><i class="fas fa-edit"></i> Sửa</a>
+      <button id="btnDelete" class="btn btn-danger"><i class="fas fa-trash"></i> Xóa</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="admin-footer">
+    © 2025 Mì Cay Đức Hiệu - Admin System
+  </footer>
+
+  <!-- JS toggle submenu -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const submenuToggles = document.querySelectorAll(".submenu-toggle");
+      submenuToggles.forEach(toggle => {
+        toggle.addEventListener("click", function () {
+          this.parentElement.classList.toggle("open");
+        });
+      });
+    });
+  </script>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const detailContainer = document.getElementById("storeDetail");
+      const btnEdit = document.getElementById("btnEdit");
+      const btnDelete = document.getElementById("btnDelete");
+
+      let stores = JSON.parse(localStorage.getItem("stores")) || [];
+      let store = stores.find(s => s.id == id);
+
+      if (!store) {
+        detailContainer.innerHTML = "<p class='text-danger'>Không tìm thấy cửa hàng.</p>";
+        btnEdit.style.display = "none";
+        btnDelete.style.display = "none";
+        return;
+      }
+
+      detailContainer.innerHTML = `
+      <div class="store-card">
+        <p><strong>Tên cửa hàng:</strong> ${store.name}</p>
+        <p><strong>Địa chỉ:</strong> ${store.address}</p>
+        <p><strong>Chủ cửa hàng:</strong> ${store.owner}</p>
+        <p><strong>Số điện thoại:</strong> ${store.phone}</p>
+        <p><strong>Ngày ký HĐ:</strong> ${store.startDate}</p>
+        <p><strong>Ngày hết hạn:</strong> ${store.endDate}</p>
+        <p><strong>Doanh thu tháng:</strong> ${store.revenue}</p>
+        <p><strong>Trạng thái:</strong> ${store.status}</p>
+      </div>
+    `;
+
+      // Sửa
+      btnEdit.href = `store-edit.html?id=${store.id}`;
+
+      // Xoá
+      btnDelete.addEventListener("click", function () {
+        if (confirm("Bạn có chắc chắn muốn xóa cửa hàng này?")) {
+          stores = stores.filter(s => s.id != id);
+          localStorage.setItem("stores", JSON.stringify(stores));
+          alert("Đã xóa cửa hàng.");
+          window.location.href = "store.html";
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

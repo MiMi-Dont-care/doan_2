@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>In hợp đồng - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+      line-height: 1.6;
+      padding: 40px;
+      max-width: 800px;
+      margin: auto;
+      color: #000;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .header p {
+      margin: 0;
+    }
+
+    .title {
+      font-weight: bold;
+      text-transform: uppercase;
+      margin: 20px 0;
+    }
+
+    .section {
+      margin: 20px 0;
+    }
+
+    .signature {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 50px;
+    }
+
+    .signature div {
+      width: 45%;
+      text-align: center;
+    }
+
+    .btn-print {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    @media print {
+      .btn-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="btn-print" onclick="window.print()"><i class="fas fa-print"></i> In hợp đồng</button>
+
+  <div class="header text-center">
+    <p><strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong></p>
+    <p><em>Độc lập - Tự do - Hạnh phúc</em></p>
+    <hr style="width:200px; margin:auto; margin-top:5px;">
+  </div>
+
+  <h2 class="text-center title">HỢP ĐỒNG NHƯỢNG QUYỀN THƯƠNG MẠI</h2>
+
+  <div id="contractContent"></div>
+
+  <div class="signature">
+    <div>
+      <p><strong>Bên A (Bên Nhượng Quyền)</strong></p>
+      <p><em>Đại diện Công ty Mì Cay Đức Hiệu</em></p>
+      <br><br><br>
+      <p><strong>Ký, ghi rõ họ tên</strong></p>
+    </div>
+    <div>
+      <p><strong>Bên B (Bên Nhận Quyền)</strong></p>
+      <p><em>Chủ cửa hàng</em></p>
+      <br><br><br>
+      <p><strong>Ký, ghi rõ họ tên</strong></p>
+    </div>
+  </div>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const container = document.getElementById("contractContent");
+
+      let contracts = JSON.parse(localStorage.getItem("contracts")) || [];
+      let contract = contracts.find(c => c.contractId === id);
+
+      if (!contract) {
+        container.innerHTML = "<p class='text-danger'>Không tìm thấy hợp đồng.</p>";
+        return;
+      }
+
+      const today = new Date();
+      const isExpired = new Date(contract.endDate) < today;
+      const statusText = isExpired ? "Hết hạn" : "Đang hiệu lực";
+
+      container.innerHTML = `
+        <div class="section">
+          <p><strong>Số hợp đồng:</strong> ${contract.contractId}</p>
+          <p><strong>Bên A:</strong> Công ty Mì Cay Đức Hiệu</p>
+          <p><strong>Bên B:</strong> ${contract.owner} - ${contract.storeName}</p>
+        </div>
+
+        <div class="section">
+          <p><strong>Điều 1. Đối tượng hợp đồng</strong></p>
+          <p>Bên A đồng ý nhượng quyền thương mại thương hiệu <strong>Mì Cay Đức Hiệu</strong> cho Bên B theo các điều khoản trong hợp đồng này.</p>
+        </div>
+
+        <div class="section">
+          <p><strong>Điều 2. Thời hạn hợp đồng</strong></p>
+          <p>Hợp đồng có hiệu lực từ <strong>${contract.startDate}</strong> đến <strong>${contract.endDate}</strong>.</p>
+          <p>Trạng thái hiện tại: <strong>${statusText}</strong></p>
+        </div>
+
+        <div class="section">
+          <p><strong>Điều 3. Phí nhượng quyền</strong></p>
+          <p>Bên B đồng ý thanh toán cho Bên A khoản phí nhượng quyền là <strong>${contract.initialFee}</strong>.</p>
+          <p>Phí quản lý hằng tháng: <strong>${contract.royaltyRate}% doanh thu</strong>.</p>
+        </div>
+
+        <div class="section">
+          <p><strong>Điều 4. Quyền và nghĩa vụ các bên</strong></p>
+          <p>- Bên A có trách nhiệm hỗ trợ đào tạo, cung cấp công thức và nguyên liệu chuẩn.</p>
+          <p>- Bên B có trách nhiệm đảm bảo doanh thu báo cáo trung thực, tuân thủ quy định thương hiệu.</p>
+        </div>
+
+        <div class="section">
+          <p><strong>Điều 5. Điều khoản chung</strong></p>
+          <p>Hai bên cam kết thực hiện đúng các điều khoản trên. Hợp đồng này được lập thành 02 bản, mỗi bên giữ 01 bản có giá trị pháp lý như nhau.</p>
+        </div>
+      `;
+    });
+  </script>
+</body>
+
+</html>

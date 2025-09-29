@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa cửa hàng - Mì Cay Đức Hiệu</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/grid.css">
+    <link rel="stylesheet" href="../css/color.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/button.css">
+    <link rel="stylesheet" href="../css/flex.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/store.css">
+    <link rel="stylesheet" href="../css/form.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="logo">Mì Cay Đức Hiệu - Admin</div>
+        <div class="user-menu">
+            <i class="fas fa-user-circle"></i> Admin
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <ul>
+            <li><i class="fas fa-chart-line"></i> Dashboard</li>
+            <li class="active"><i class="fas fa-store"></i> Quản lý cửa hàng</li>
+            <li><i class="fas fa-file-contract"></i> Hợp đồng</li>
+            <li><i class="fas fa-dollar-sign"></i> Doanh thu</li>
+            <li><i class="fas fa-tags"></i> Khuyến mãi</li>
+            <li class="has-submenu">
+                <div class="submenu-toggle">
+                    <i class="fas fa-chart-pie"></i> Báo cáo
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+                <ul class="submenu">
+                    <li><i class="fas fa-calendar-day"></i> Theo ngày / tháng</li>
+                    <li><i class="fas fa-store-alt"></i> Theo cửa hàng</li>
+                </ul>
+            </li>
+            <li><i class="fas fa-users"></i> Người dùng</li>
+        </ul>
+    </aside>
+
+    <!-- Main -->
+    <main class="admin-main">
+        <h1 class="fs-2 fw-bold mb-3">Sửa cửa hàng</h1>
+
+        <form id="storeForm" class="form">
+            <div class="form-group">
+                <label for="name">Tên cửa hàng</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <input type="text" id="address" required>
+            </div>
+            <div class="form-group">
+                <label for="owner">Chủ cửa hàng</label>
+                <input type="text" id="owner" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="text" id="phone" required placeholder="Ví dụ: 0912345678">
+            </div>
+            <div class="form-group">
+                <label for="startDate">Ngày ký HĐ</label>
+                <input type="date" id="startDate" required>
+            </div>
+            <div class="form-group">
+                <label for="endDate">Ngày hết hạn</label>
+                <input type="date" id="endDate" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Trạng thái</label>
+                <select id="status">
+                    <option value="Đang hoạt động">Đang hoạt động</option>
+                    <option value="Chậm báo cáo">Chậm báo cáo</option>
+                    <option value="Chưa nộp">Chưa nộp</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu thay đổi</button>
+                <a href="store.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+            </div>
+        </form>
+    </main>
+
+    <!-- Footer -->
+    <footer class="admin-footer">
+        © 2025 Mì Cay Đức Hiệu - Admin System
+    </footer>
+
+    <!-- JS toggle submenu -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const submenuToggles = document.querySelectorAll(".submenu-toggle");
+            submenuToggles.forEach(toggle => {
+                toggle.addEventListener("click", function () {
+                    this.parentElement.classList.toggle("open");
+                });
+            });
+        });
+    </script>
+
+    <!-- JS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("id");
+
+            const form = document.getElementById("storeForm");
+
+            let stores = JSON.parse(localStorage.getItem("stores")) || [];
+            let store = stores.find(s => s.id == id);
+
+            if (!store) {
+                alert("Không tìm thấy cửa hàng!");
+                window.location.href = "store.html";
+                return;
+            }
+
+            // Thêm dữ liệu vào form
+            document.getElementById("name").value = store.name;
+            document.getElementById("address").value = store.address;
+            document.getElementById("owner").value = store.owner;
+            document.getElementById("phone").value = store.phone;
+            document.getElementById("startDate").value = store.startDate; // YYYY-MM-DD
+            document.getElementById("endDate").value = store.endDate;     // YYYY-MM-DD
+            document.getElementById("status").value = store.status;
+
+            // Ấn nút sửa
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById("name").value.trim();
+                const address = document.getElementById("address").value.trim();
+                const owner = document.getElementById("owner").value.trim();
+                const phone = document.getElementById("phone").value.trim();
+                const startDate = document.getElementById("startDate").value;
+                const endDate = document.getElementById("endDate").value;
+                const status = document.getElementById("status").value;
+
+                // Validate
+                if (!name || !address || !owner) {
+                    alert("Vui lòng nhập đầy đủ thông tin bắt buộc.");
+                    return;
+                }
+
+                const phoneRegex = /^0\d{9}$/;
+                if (!phoneRegex.test(phone)) {
+                    alert("Số điện thoại không hợp lệ. Vui lòng nhập 10 số và bắt đầu bằng 0.");
+                    return;
+                }
+
+                if (startDate && endDate && new Date(startDate) >= new Date(endDate)) {
+                    alert("Ngày hết hạn phải sau ngày ký hợp đồng.");
+                    return;
+                }
+
+                store.name = name;
+                store.address = address;
+                store.owner = owner;
+                store.phone = phone;
+                store.startDate = startDate;
+                store.endDate = endDate;
+                store.status = status;
+
+                // Lưu lại
+                const idx = stores.findIndex(s => s.id == id);
+                if (idx !== -1) {
+                    stores[idx] = store;
+                    localStorage.setItem("stores", JSON.stringify(stores));
+                    alert("Cập nhật cửa hàng thành công!");
+                    window.location.href = "store.html";
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

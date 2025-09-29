@@ -1,0 +1,216 @@
+/* Layout */
+body {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 60px 1fr 50px;
+  height: 100vh;
+  background: #f8f9fa;
+  font-family: Arial, sans-serif;
+}
+
+/* Header */
+.admin-header {
+  grid-area: header;
+  background: #212529;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+.admin-header .logo { font-weight: bold; }
+.admin-header .user-menu { cursor: pointer; }
+
+/* Sidebar */
+.admin-sidebar {
+  grid-area: sidebar;
+  background: #343a40;
+  color: #fff;
+  padding: 1rem 0;
+}
+.admin-sidebar ul { list-style: none; }
+.admin-sidebar li {
+  padding: .75rem 1.5rem;
+  cursor: pointer;
+  transition: background .3s;
+}
+.admin-sidebar li:hover,
+.admin-sidebar li.active { background: #dc3545; }
+
+/* Submenu */
+/* .admin-sidebar ul li.has-submenu {
+  position: relative;
+} */
+
+.submenu-toggle {
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .75rem 1.5rem;
+  cursor: pointer; */
+  cursor: pointer;
+  transition: background .3s;
+}
+
+.submenu-toggle:hover {
+  background: #495057;
+}
+
+.submenu {
+  list-style: none;
+  background: #2c3034;
+  display: none;
+}
+
+.submenu li {
+  padding: .5rem 2.5rem;
+  font-size: .9rem;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.submenu li:hover {
+  background: #495057;
+  color: #fff;
+}
+
+.has-submenu.open .submenu {
+  display: block;
+}
+
+.has-submenu.open .arrow {
+  transform: rotate(180deg);
+  transition: transform .3s;
+}
+
+
+
+/* Main */
+.admin-main {
+  grid-area: main;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: .75rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  transition: transform .3s;
+}
+.card:hover { transform: translateY(-5px); }
+.card i { font-size: 2rem; margin-bottom: .5rem; }
+.card--blue i { color: #0d6efd; }
+.card--green i { color: #198754; }
+.card--orange i { color: #fd7e14; }
+.card--red i { color: #dc3545; }
+
+/* Table */
+.table-box table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table-box th, .table-box td {
+  border: 1px solid #ddd;
+  padding: .5rem;
+  text-align: center;
+}
+.table-box th { background: #f8f9fa; }
+
+.report__table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+.report__table th, .report__table td {
+  padding: .75rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+.report__table th { background: #f1f1f1; }
+.status {
+  padding: .25rem .75rem;
+  border-radius: .5rem;
+  font-size: .85rem;
+  font-weight: bold;
+}
+.status.success { background: #d1e7dd; color: #0f5132; }
+.status.warning { background: #fff3cd; color: #664d03; }
+.status.danger {
+  background: #f8d7da;
+  color: #842029;
+}
+
+.table-box__header {
+  margin-bottom: .5rem;
+}
+.year-filter {
+  padding: .25rem .5rem;
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+  font-size: .9rem;
+}
+
+
+/* Progress bar */
+.progress {
+  background: #e9ecef;
+  border-radius: .5rem;
+  margin: .5rem 0;
+  overflow: hidden;
+  height: 1.5rem;
+}
+.progress-bar {
+  height: 100%;
+  line-height: 1.5rem;
+  color: #fff;
+  text-align: center;
+  font-size: .85rem;
+}
+
+/* Bar chart CSS */
+.bar-chart {
+  background: #fff;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: .5rem;
+}
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  height: 200px;
+  margin-top: 1rem;
+}
+.bar {
+  flex: 1;
+  background: #fd7e14;
+  border-radius: .25rem .25rem 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  color: #fff;
+  font-size: .8rem;
+}
+.bar span {
+  transform: translateY(1.2rem);
+  color: #212529;
+  font-weight: 600;
+}
+
+/* Footer */
+.admin-footer {
+  grid-area: footer;
+  background: #212529;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

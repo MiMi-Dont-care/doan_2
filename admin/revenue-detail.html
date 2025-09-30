@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết doanh thu - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/store.css">
+  <link rel="stylesheet" href="../css/form.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="logo">Mì Cay Đức Hiệu - Admin</div>
+    <div class="user-menu">
+      <i class="fas fa-user-circle"></i> Admin
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <ul>
+      <li><a href="dashboard.html" style="color: white; text-decoration: none;"><i
+            class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="store.html" style="color: white; text-decoration: none;"><i class="fas fa-store"></i> Quản lý cửa
+          hàng</a></li>
+      <li><a href="contract.html" style="color: white; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp
+          đồng</a></li>
+      <li class="active"><a href="revenue.html" style="color: white; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh
+          thu</a></li>
+      <li><a href="promotion.html" style="color: white; text-decoration: none;"><i class="fas fa-tags"></i> Khuyến
+          mãi</a></li>
+      <li><a href="report.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-pie"></i> Báo
+          cáo</a></li>
+      <li><a href="user.html" style="color: white; text-decoration: none;"><i class="fas fa-users"></i> Người dùng</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <h1 class="fs-2 fw-bold mb-3">Chi tiết doanh thu</h1>
+    <div id="revenueDetail" class="store-detail"></div>
+
+    <div class="form-actions mt-3">
+      <a href="revenue.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
+      <a href="#" id="btnPrint" class="btn btn-primary"><i class="fas fa-print"></i> In</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="admin-footer">
+    © 2025 Mì Cay Đức Hiệu - Admin System
+  </footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const detailContainer = document.getElementById("revenueDetail");
+      const btnPrint = document.getElementById("btnPrint");
+
+      let revenues = JSON.parse(localStorage.getItem("revenues")) || [];
+      let revenue = revenues.find(r => r.id === id);
+
+      if (!revenue) {
+        detailContainer.innerHTML = "<p class='text-danger'>Không tìm thấy báo cáo doanh thu.</p>";
+        btnPrint.style.display = "none";
+        return;
+      }
+
+      detailContainer.innerHTML = `
+        <div class="store-card">
+          <p><strong>Cửa hàng:</strong> ${revenue.storeName}</p>
+          <p><strong>Chủ cửa hàng:</strong> ${revenue.owner}</p>
+          <p><strong>Ngày báo cáo:</strong> ${revenue.reportDate}</p>
+          <p><strong>Doanh thu:</strong> ${revenue.revenue > 0 ? revenue.revenue.toLocaleString() + " VNĐ" : "-"}</p>
+          <p><strong>Phí nhượng quyền:</strong> ${revenue.royalty > 0 ? revenue.royalty.toLocaleString() + " VNĐ" : "-"}</p>
+          <p><strong>Trạng thái:</strong> <span class="status ${revenue.status === "Đã báo cáo" ? "success" : "warning"}">${revenue.status}</span></p>
+        </div>
+      `;
+
+      // In
+      btnPrint.href = `revenue-print.html?id=${revenue.id}`;
+      btnPrint.target = "_blank";
+    });
+  </script>
+</body>
+
+</html>

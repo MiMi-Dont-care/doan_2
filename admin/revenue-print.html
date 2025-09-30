@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>In báo cáo doanh thu - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/color.css">
+
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #000;
+      margin: 40px;
+    }
+
+    .doc-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .doc-header h2 {
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .doc-info {
+      margin: 20px 0;
+    }
+
+    .doc-info p {
+      margin: 5px 0;
+    }
+
+    .doc-footer {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .doc-footer .sign {
+      text-align: center;
+      width: 45%;
+    }
+
+    .btn-print {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 16px;
+      background: #0d6efd;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    @media print {
+      .btn-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#" onclick="window.print()" class="btn-print">🖨 In báo cáo</a>
+
+  <div class="doc-header">
+    <h2>BÁO CÁO DOANH THU CỬA HÀNG</h2>
+    <p><em>Chuỗi cửa hàng Mì Cay Đức Hiệu</em></p>
+  </div>
+
+  <div id="revenueContent"></div>
+
+  <div class="doc-footer">
+    <div class="sign">
+      <p><strong>Đại diện cửa hàng</strong></p>
+      <p>(Ký, ghi rõ họ tên)</p>
+    </div>
+    <div class="sign">
+      <p><strong>Đại diện Công ty</strong></p>
+      <p>(Ký, ghi rõ họ tên, đóng dấu)</p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      const container = document.getElementById("revenueContent");
+
+      let revenues = JSON.parse(localStorage.getItem("revenues")) || [];
+      let revenue = revenues.find(r => r.id === id);
+
+      if (!revenue) {
+        container.innerHTML = "<p class='text-danger'>Không tìm thấy báo cáo doanh thu.</p>";
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="doc-info">
+          <p><strong>Cửa hàng:</strong> ${revenue.storeName}</p>
+          <p><strong>Chủ cửa hàng:</strong> ${revenue.owner}</p>
+          <p><strong>Ngày báo cáo:</strong> ${revenue.reportDate}</p>
+          <p><strong>Doanh thu:</strong> ${revenue.revenue.toLocaleString()} VNĐ</p>
+          <p><strong>Phí nhượng quyền:</strong> ${revenue.royalty.toLocaleString()} VNĐ</p>
+          <p><strong>Trạng thái:</strong> ${revenue.status}</p>
+        </div>
+      `;
+    });
+  </script>
+</body>
+
+</html>

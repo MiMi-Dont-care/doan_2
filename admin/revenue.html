@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách doanh thu - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/store.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="logo">Mì Cay Đức Hiệu - Admin</div>
+    <div class="user-menu">
+      <i class="fas fa-user-circle"></i> Admin
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <ul>
+      <li><a href="dashboard.html" style="color: white; text-decoration: none;"><i
+            class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="store.html" style="color: white; text-decoration: none;"><i class="fas fa-store"></i> Quản lý cửa
+          hàng</a></li>
+      <li><a href="contract.html" style="color: white; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp
+          đồng</a></li>
+      <li class="active"><a href="revenue.html" style="color: white; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh
+          thu</a></li>
+      <li><a href="promotion.html" style="color: white; text-decoration: none;"><i class="fas fa-tags"></i> Khuyến
+          mãi</a></li>
+      <li><a href="report.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-pie"></i> Báo
+          cáo</a></li>
+      <li><a href="user.html" style="color: white; text-decoration: none;"><i class="fas fa-users"></i> Người dùng</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="fs-2 fw-bold">Danh sách doanh thu</h1>
+      <div>
+        <button id="btnLoad" class="btn btn-secondary"><i class="fas fa-database"></i> Load dữ liệu</button>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="store-search mb-3 d-flex justify-content-between align-items-center">
+      <input type="text" id="searchInput" class="store-search__input"
+        placeholder="Tìm kiếm theo cửa hàng, chủ cửa hàng...">
+      <button id="btnSearch" class="btn btn-success"><i class="fas fa-search"></i> Tìm kiếm</button>
+    </div>
+
+    <!-- Table -->
+    <table class="report__table store-table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Cửa hàng</th>
+          <th>Chủ cửa hàng</th>
+          <th>Ngày báo cáo</th>
+          <th>Doanh thu (VNĐ)</th>
+          <th>Phí nhượng quyền</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="revenueTableBody">
+        <tr>
+          <td colspan="8" class="text-center">Chưa có dữ liệu</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div id="pagination" class="pagination d-flex justify-content-center mt-3"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="admin-footer">
+    © 2025 Mì Cay Đức Hiệu - Admin System
+  </footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tableBody = document.getElementById("revenueTableBody");
+      const pagination = document.getElementById("pagination");
+      const searchInput = document.getElementById("searchInput");
+      const btnSearch = document.getElementById("btnSearch");
+      const btnLoad = document.getElementById("btnLoad");
+
+      let revenues = [];
+      let filteredRevenues = [];
+      let currentPage = 1;
+      const itemsPerPage = 10;
+
+      // Dữ liệu mẫu
+      function generateDummyRevenues(count = 100) {
+        const data = [];
+        for (let i = 1; i <= count; i++) {
+          const date = new Date(2025, 8, (i % 28) + 1); // tháng 9/2025
+          const formatDate = (d) => d.toISOString().split("T")[0];
+          const revenue = i % 5 === 0 ? 0 : (Math.floor(Math.random() * 100) + 50) * 1000000; // vài dòng = chưa báo cáo
+          const royaltyRate = 5; // mặc định 5%
+          data.push({
+            id: "REV-" + i,
+            storeName: `Mì Cay Đức Hiệu - CN ${i}`,
+            owner: `Chủ ${String.fromCharCode(64 + (i % 26 || 26))}`,
+            reportDate: formatDate(date),
+            revenue,
+            royalty: revenue > 0 ? (revenue * royaltyRate / 100) : 0,
+            status: revenue > 0 ? "Đã báo cáo" : "Chậm báo cáo"
+          });
+        }
+        return data;
+      }
+
+      // Hiển thị Table
+      function renderTable(data, page = 1) {
+        tableBody.innerHTML = "";
+        const start = (page - 1) * itemsPerPage;
+        const end = page * itemsPerPage;
+        const pageData = data.slice(start, end);
+
+        if (pageData.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="8" class="text-center">Không có dữ liệu</td></tr>`;
+          return;
+        }
+
+        pageData.forEach((rev, index) => {
+          const row = `
+            <tr>
+              <td>${start + index + 1}</td>
+              <td>${rev.storeName}</td>
+              <td>${rev.owner}</td>
+              <td>${rev.reportDate}</td>
+              <td>${rev.revenue > 0 ? rev.revenue.toLocaleString() : "-"}</td>
+              <td>${rev.royalty > 0 ? rev.royalty.toLocaleString() : "-"}</td>
+              <td><span class="status ${rev.status === "Đã báo cáo" ? "success" : "warning"}">${rev.status}</span></td>
+              <td>
+                <a href="revenue-detail.html?id=${rev.id}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                <a href="revenue-print.html?id=${rev.id}" target="_blank" class="btn btn-secondary"><i class="fas fa-print"></i></a>
+              </td>
+            </tr>
+          `;
+          tableBody.innerHTML += row;
+        });
+        renderPagination(data.length, page);
+      }
+
+      // Phân trang
+      function renderPagination(totalItems, page) {
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        if (totalPages <= 1) return;
+
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.className = "btn " + (i === page ? "btn-primary" : "");
+          btn.textContent = i;
+          btn.addEventListener("click", () => {
+            currentPage = i;
+            renderTable(filteredRevenues, currentPage);
+          });
+          pagination.appendChild(btn);
+        }
+      }
+
+      // Tìm kiếm
+      function searchRevenues(keyword) {
+        keyword = keyword.toLowerCase();
+        filteredRevenues = revenues.filter(rev =>
+          rev.storeName.toLowerCase().includes(keyword) ||
+          rev.owner.toLowerCase().includes(keyword)
+        );
+        currentPage = 1;
+        renderTable(filteredRevenues, currentPage);
+      }
+
+      // Load dữ liệu
+      btnLoad.addEventListener("click", () => {
+        revenues = generateDummyRevenues(100);
+        localStorage.setItem("revenues", JSON.stringify(revenues));
+        filteredRevenues = revenues;
+        renderTable(filteredRevenues, currentPage);
+      });
+
+      // Tìm kiếm
+      btnSearch.addEventListener("click", () => {
+        searchRevenues(searchInput.value.trim());
+      });
+      searchInput.addEventListener("keyup", (e) => {
+        if (e.key === "Enter") searchRevenues(searchInput.value.trim());
+      });
+
+      // Lấy dữ liệu từ localstorage nếu đã có
+      const saved = localStorage.getItem("revenues");
+      if (saved) {
+        revenues = JSON.parse(saved);
+        filteredRevenues = revenues;
+        renderTable(filteredRevenues, currentPage);
+      }
+    });
+  </script>
+</body>
+
+</html>

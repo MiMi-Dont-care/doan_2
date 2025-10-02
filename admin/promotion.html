@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách khuyến mãi - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/store.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="logo">Mì Cay Đức Hiệu - Admin</div>
+    <div class="user-menu"><i class="fas fa-user-circle"></i> Admin</div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <ul>
+      <li><a href="dashboard.html" style="color: white; text-decoration: none;"><i
+            class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="store.html" style="color: white; text-decoration: none;"><i class="fas fa-store"></i> Quản lý cửa
+          hàng</a></li>
+      <li><a href="contract.html" style="color: white; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp
+          đồng</a></li>
+      <li><a href="revenue.html" style="color: white; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh
+          thu</a></li>
+      <li class="active"><a href="promotion.html" style="color: white; text-decoration: none;"><i class="fas fa-tags"></i> Khuyến
+          mãi</a></li>
+      <li><a href="report.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-pie"></i> Báo
+          cáo</a></li>
+      <li><a href="user.html" style="color: white; text-decoration: none;"><i class="fas fa-users"></i> Người dùng</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="fs-2 fw-bold">Danh sách khuyến mãi</h1>
+      <a href="promotion-create.html" class="btn btn-primary"><i class="fas fa-plus"></i> Tạo mới</a>
+    </div>
+
+    <!-- Search -->
+    <div class="store-search mb-3 d-flex justify-content-between align-items-center">
+      <input type="text" id="searchInput" class="store-search__input" placeholder="Tìm kiếm theo tên, mã KM, mô tả...">
+      <button id="btnSearch" class="btn btn-success"><i class="fas fa-search"></i> Tìm kiếm</button>
+    </div>
+
+    <!-- Table -->
+    <table class="report__table store-table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Mã KM</th>
+          <th>Tên chương trình</th>
+          <th>Thời gian</th>
+          <th>Hình thức</th>
+          <th>Đối tượng</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="promotionTableBody">
+        <tr>
+          <td colspan="8" class="text-center">Chưa có dữ liệu</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="pagination" class="pagination d-flex justify-content-center mt-3"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="admin-footer">© 2025 Mì Cay Đức Hiệu - Admin System</footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tableBody = document.getElementById("promotionTableBody");
+      const pagination = document.getElementById("pagination");
+      const searchInput = document.getElementById("searchInput");
+      const btnSearch = document.getElementById("btnSearch");
+
+      let promotions = JSON.parse(localStorage.getItem("promotions")) || [];
+      let filteredPromotions = promotions;
+      let currentPage = 1;
+      const itemsPerPage = 10;
+
+      function getStatus(promo) {
+        const today = new Date().toISOString().split("T")[0];
+        if (today < promo.startDate) return "Sắp diễn ra";
+        if (today > promo.endDate) return "Hết hạn";
+        return "Đang diễn ra";
+      }
+
+      function renderTable(data, page = 1) {
+        tableBody.innerHTML = "";
+        const start = (page - 1) * itemsPerPage;
+        const end = page * itemsPerPage;
+        const pageData = data.slice(start, end);
+
+        if (pageData.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="8" class="text-center">Không có dữ liệu</td></tr>`;
+          return;
+        }
+
+        pageData.forEach((promo, index) => {
+          const row = `
+            <tr>
+              <td>${start + index + 1}</td>
+              <td>${promo.promoId}</td>
+              <td>${promo.name}</td>
+              <td>${promo.startDate} → ${promo.endDate}</td>
+              <td>${promo.type} (${promo.value})</td>
+              <td>${promo.scope}</td>
+              <td><span class="status ${getStatus(promo) === "Đang diễn ra" ? "success" : (getStatus(promo) === "Sắp diễn ra" ? "warning" : "danger")}">${getStatus(promo)}</span></td>
+              <td>
+                <a href="promotion-detail.html?id=${promo.promoId}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                <a href="promotion-edit.html?id=${promo.promoId}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                <a class="btn btn-danger btn-delete" data-id="${promo.promoId}"><i class="fas fa-trash"></i></a>
+              </td>
+            </tr>`;
+          tableBody.innerHTML += row;
+        });
+        renderPagination(data.length, page);
+        attachDeleteEvents();
+      }
+
+      function renderPagination(totalItems, page) {
+        pagination.innerHTML = "";
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.className = "btn " + (i === page ? "btn-primary" : "");
+          btn.textContent = i;
+          btn.addEventListener("click", () => { currentPage = i; renderTable(filteredPromotions, currentPage); });
+          pagination.appendChild(btn);
+        }
+      }
+
+      function attachDeleteEvents() {
+        document.querySelectorAll(".btn-delete").forEach(btn => {
+          btn.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            if (confirm("Bạn có chắc chắn muốn xóa khuyến mãi này?")) {
+              promotions = promotions.filter(p => p.promoId !== id);
+              localStorage.setItem("promotions", JSON.stringify(promotions));
+              filteredPromotions = promotions;
+              renderTable(filteredPromotions, currentPage);
+            }
+          });
+        });
+      }
+
+      function searchPromotions(keyword) {
+        keyword = keyword.toLowerCase();
+        filteredPromotions = promotions.filter(p =>
+          p.promoId.toLowerCase().includes(keyword) ||
+          p.name.toLowerCase().includes(keyword) ||
+          p.type.toLowerCase().includes(keyword) ||
+          p.scope.toLowerCase().includes(keyword)
+        );
+        currentPage = 1;
+        renderTable(filteredPromotions, currentPage);
+      }
+
+      btnSearch.addEventListener("click", () => searchPromotions(searchInput.value.trim()));
+      searchInput.addEventListener("keyup", e => { if (e.key === "Enter") searchPromotions(searchInput.value.trim()); });
+
+      renderTable(filteredPromotions, currentPage);
+    });
+  </script>
+</body>
+
+</html>

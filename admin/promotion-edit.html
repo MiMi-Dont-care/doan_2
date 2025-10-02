@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sửa khuyến mãi - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/form.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="logo">Mì Cay Đức Hiệu - Admin</div>
+    <div class="user-menu"><i class="fas fa-user-circle"></i> Admin</div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <ul>
+      <li><a href="dashboard.html" style="color: white; text-decoration: none;"><i
+            class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="store.html" style="color: white; text-decoration: none;"><i class="fas fa-store"></i> Quản lý cửa
+          hàng</a></li>
+      <li><a href="contract.html" style="color: white; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp
+          đồng</a></li>
+      <li><a href="revenue.html" style="color: white; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh
+          thu</a></li>
+      <li class="active"><a href="promotion.html" style="color: white; text-decoration: none;"><i class="fas fa-tags"></i> Khuyến
+          mãi</a></li>
+      <li><a href="report.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-pie"></i> Báo
+          cáo</a></li>
+      <li><a href="user.html" style="color: white; text-decoration: none;"><i class="fas fa-users"></i> Người dùng</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <h1 class="fs-2 fw-bold mb-3">Sửa khuyến mãi</h1>
+
+    <form id="promoForm" class="form">
+      <div class="form-group">
+        <label for="name">Tên chương trình</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="type">Hình thức</label>
+        <select id="type">
+          <option value="%">Giảm %</option>
+          <option value="amount">Giảm số tiền</option>
+          <option value="combo">Combo</option>
+          <option value="gift">Tặng kèm</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="value">Giá trị</label>
+        <input type="text" id="value" required>
+      </div>
+      <div class="form-group">
+        <label for="startDate">Ngày bắt đầu</label>
+        <input type="date" id="startDate" required>
+      </div>
+      <div class="form-group">
+        <label for="endDate">Ngày kết thúc</label>
+        <input type="date" id="endDate" required>
+      </div>
+      <div class="form-group">
+        <label for="scope">Đối tượng áp dụng</label>
+        <input type="text" id="scope" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Cập nhật</button>
+        <a href="promotion.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+      </div>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="admin-footer">© 2025 Mì Cay Đức Hiệu - Admin System</footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      let promotions = JSON.parse(localStorage.getItem("promotions")) || [];
+      let promo = promotions.find(p => p.promoId === id);
+
+      if (!promo) {
+        alert("Không tìm thấy khuyến mãi.");
+        window.location.href = "promotion.html";
+        return;
+      }
+
+      // Fill dữ liệu
+      document.getElementById("name").value = promo.name;
+      document.getElementById("type").value = promo.type;
+      document.getElementById("value").value = promo.value;
+      document.getElementById("startDate").value = promo.startDate;
+      document.getElementById("endDate").value = promo.endDate;
+      document.getElementById("scope").value = promo.scope;
+
+      // Cập nhật
+      document.getElementById("promoForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        promo.name = document.getElementById("name").value.trim();
+        promo.type = document.getElementById("type").value;
+        promo.value = document.getElementById("value").value.trim();
+        promo.startDate = document.getElementById("startDate").value;
+        promo.endDate = document.getElementById("endDate").value;
+        promo.scope = document.getElementById("scope").value.trim();
+
+        localStorage.setItem("promotions", JSON.stringify(promotions));
+        alert("Cập nhật khuyến mãi thành công!");
+        window.location.href = "promotion.html";
+      });
+    });
+  </script>
+</body>
+
+</html>

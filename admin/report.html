@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Báo cáo doanh thu - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/admin.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="logo">Mì Cay Đức Hiệu - Admin</div>
+    <div class="user-menu">
+      <i class="fas fa-user-circle"></i> Admin
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <ul>
+      <li><a href="dashboard.html" style="color: white; text-decoration: none;"><i
+            class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="store.html" style="color: white; text-decoration: none;"><i class="fas fa-store"></i> Quản lý cửa
+          hàng</a></li>
+      <li><a href="contract.html" style="color: white; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp
+          đồng</a></li>
+      <li><a href="revenue.html" style="color: white; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh
+          thu</a></li>
+      <li><a href="promotion.html" style="color: white; text-decoration: none;"><i class="fas fa-tags"></i> Khuyến
+          mãi</a></li>
+      <li class="active"><a href="report.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-pie"></i> Báo
+          cáo</a></li>
+      <li><a href="user.html" style="color: white; text-decoration: none;"><i class="fas fa-users"></i> Người dùng</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <h1 class="fs-2 fw-bold mb-3">Báo cáo doanh thu (Theo ngày / tháng)</h1>
+
+    <!-- Bộ lọc -->
+    <div class="card d-flex flex-row align-items-end mb-3" style="gap:1rem; text-align:left;">
+      <div class="form-group">
+        <label for="fromDate">Từ ngày</label>
+        <input type="date" id="fromDate" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="toDate">Đến ngày</label>
+        <input type="date" id="toDate" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="storeSelect">Cửa hàng</label>
+        <select id="storeSelect" class="form-select">
+          <option value="">Tất cả</option>
+          <option value="CN Quận 1">Mì Cay Đức Hiệu - CN Quận 1</option>
+          <option value="CN Quận 3">Mì Cay Đức Hiệu - CN Quận 3</option>
+        </select>
+      </div>
+      <button id="btnFilter" class="btn btn-success"><i class="fas fa-search"></i> Xem báo cáo</button>
+    </div>
+
+    <!-- Bảng dữ liệu -->
+    <div class="table-box mt-3">
+      <table class="report__table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Cửa hàng</th>
+            <th>Ngày</th>
+            <th>Doanh thu</th>
+            <th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody id="revenueTableBody">
+          <tr>
+            <td colspan="5" class="text-center">Chưa có dữ liệu</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Biểu đồ -->
+    <div class="bar-chart mt-3">
+      <h3 class="fs-4 fw-bold">Biểu đồ doanh thu</h3>
+      <div id="bars" class="bars"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="admin-footer">
+    © 2025 Mì Cay Đức Hiệu - Admin System
+  </footer>
+
+  <!-- JS Báo cáo -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tableBody = document.getElementById("revenueTableBody");
+      const bars = document.getElementById("bars");
+      const btnFilter = document.getElementById("btnFilter");
+
+      // Dữ liệu mẫu
+      const revenues = [
+        { id: 1, store: "Mì Cay Đức Hiệu - CN Quận 1", date: "2025-09-01", revenue: 5, note: "" },
+        { id: 2, store: "Mì Cay Đức Hiệu - CN Quận 1", date: "2025-09-02", revenue: 6, note: "" },
+        { id: 3, store: "Mì Cay Đức Hiệu - CN Quận 3", date: "2025-09-01", revenue: 4, note: "" },
+        { id: 4, store: "Mì Cay Đức Hiệu - CN Quận 3", date: "2025-09-02", revenue: 7, note: "" },
+      ];
+
+      // Render bảng
+      function renderTable(data) {
+        tableBody.innerHTML = "";
+        if (data.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="5" class="text-center">Không có dữ liệu</td></tr>`;
+          return;
+        }
+        data.forEach((item, index) => {
+          tableBody.innerHTML += `
+            <tr>
+              <td>${index + 1}</td>
+              <td>${item.store}</td>
+              <td>${item.date}</td>
+              <td>${item.revenue} triệu</td>
+              <td>${item.note || "-"}</td>
+            </tr>
+          `;
+        });
+      }
+
+      // Render biểu đồ
+      function renderChart(data) {
+        bars.innerHTML = "";
+        if (data.length === 0) return;
+
+        data.forEach(item => {
+          const bar = document.createElement("div");
+          bar.className = "bar";
+          bar.style.height = (item.revenue * 20) + "px"; // scale 1 triệu = 20px
+          bar.style.background = "#0d6efd";
+          bar.innerHTML = `<span>${item.revenue}</span>`;
+          bars.appendChild(bar);
+        });
+      }
+
+      // Lọc dữ liệu
+      btnFilter.addEventListener("click", () => {
+        const fromDate = document.getElementById("fromDate").value;
+        const toDate = document.getElementById("toDate").value;
+        const store = document.getElementById("storeSelect").value;
+
+        let filtered = revenues;
+
+        if (fromDate) {
+          filtered = filtered.filter(r => r.date >= fromDate);
+        }
+        if (toDate) {
+          filtered = filtered.filter(r => r.date <= toDate);
+        }
+        if (store) {
+          filtered = filtered.filter(r => r.store.includes(store));
+        }
+
+        renderTable(filtered);
+        renderChart(filtered);
+      });
+
+      // Mặc định load toàn bộ
+      renderTable(revenues);
+      renderChart(revenues);
+    });
+  </script>
+
+</body>
+
+</html>

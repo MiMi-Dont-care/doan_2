@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tạo khuyến mãi - Mì Cay Đức Hiệu</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="../css/form.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="logo">Mì Cay Đức Hiệu - Admin</div>
+    <div class="user-menu"><i class="fas fa-user-circle"></i> Admin</div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <ul>
+      <li><a href="dashboard.html" style="color: white; text-decoration: none;"><i
+            class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="store.html" style="color: white; text-decoration: none;"><i class="fas fa-store"></i> Quản lý cửa
+          hàng</a></li>
+      <li><a href="contract.html" style="color: white; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp
+          đồng</a></li>
+      <li><a href="revenue.html" style="color: white; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh
+          thu</a></li>
+      <li class="active"><a href="promotion.html" style="color: white; text-decoration: none;"><i class="fas fa-tags"></i> Khuyến
+          mãi</a></li>
+      <li><a href="report.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-pie"></i> Báo
+          cáo</a></li>
+      <li><a href="user.html" style="color: white; text-decoration: none;"><i class="fas fa-users"></i> Người dùng</a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+    <h1 class="fs-2 fw-bold mb-3">Tạo khuyến mãi mới</h1>
+
+    <form id="promoForm" class="form">
+      <div class="form-group">
+        <label for="name">Tên chương trình</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="type">Hình thức</label>
+        <select id="type">
+          <option value="%">Giảm %</option>
+          <option value="amount">Giảm số tiền</option>
+          <option value="combo">Combo</option>
+          <option value="gift">Tặng kèm</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="value">Giá trị</label>
+        <input type="text" id="value" required>
+      </div>
+      <div class="form-group">
+        <label for="startDate">Ngày bắt đầu</label>
+        <input type="date" id="startDate" required>
+      </div>
+      <div class="form-group">
+        <label for="endDate">Ngày kết thúc</label>
+        <input type="date" id="endDate" required>
+      </div>
+      <div class="form-group">
+        <label for="scope">Đối tượng áp dụng</label>
+        <input type="text" id="scope" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>
+        <a href="promotion.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+      </div>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="admin-footer">© 2025 Mì Cay Đức Hiệu - Admin System</footer>
+
+  <!-- JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("promoForm");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const promo = {
+          promoId: "KM" + Date.now(),
+          name: document.getElementById("name").value.trim(),
+          type: document.getElementById("type").value,
+          value: document.getElementById("value").value.trim(),
+          startDate: document.getElementById("startDate").value,
+          endDate: document.getElementById("endDate").value,
+          scope: document.getElementById("scope").value.trim()
+        };
+
+        let promotions = JSON.parse(localStorage.getItem("promotions")) || [];
+        promotions.push(promo);
+        localStorage.setItem("promotions", JSON.stringify(promotions));
+
+        alert("Tạo khuyến mãi thành công!");
+        window.location.href = "promotion.html";
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - Chủ cửa hàng</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/franchisee.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="franchisee-header">
+    <div class="logo"><i class="fas fa-store"></i> Mì Cay Đức Hiệu - CN Quận 1</div>
+    <div class="user-menu"><i class="fas fa-user-circle"></i> Nguyễn Văn A (Chủ cửa hàng)</div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="franchisee-sidebar">
+    <ul>
+      <li class="active"><a href="dashboard.html" style="color: black; text-decoration: none;"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a href="revenue.html" style="color: black; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh thu</a></li>
+      <li><a href="contract.html" target="_blank" style="color: black; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp đồng</a></li>
+      <li><i class="fas fa-tags"></i> Khuyến mãi</li>
+      <li><i class="fas fa-bell"></i> Thông báo</li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="franchisee-main">
+    <h1 class="fs-2 fw-bold mb-3">Tổng quan cửa hàng</h1>
+
+    <!-- Cards -->
+    <div class="franchisee-cards">
+      <div class="franchisee-card blue">
+        <i class="fas fa-coins"></i>
+        <h3>Doanh thu tháng</h3>
+        <p>150 triệu</p>
+      </div>
+      <div class="franchisee-card green">
+        <i class="fas fa-file-contract"></i>
+        <h3>Hợp đồng</h3>
+        <p>Còn hiệu lực</p>
+      </div>
+      <div class="franchisee-card orange">
+        <i class="fas fa-percentage"></i>
+        <h3>Khuyến mãi</h3>
+        <p>2 chương trình</p>
+      </div>
+      <div class="franchisee-card red">
+        <i class="fas fa-bell"></i>
+        <h3>Thông báo</h3>
+        <p>3 thông báo mới</p>
+      </div>
+    </div>
+
+    <!-- Revenue Chart -->
+    <div class="franchisee-chart">
+      <h3><i class="fas fa-chart-bar"></i> Doanh thu 6 tháng gần nhất</h3>
+      <div id="chartBars" class="chart-bars"></div>
+    </div>
+  </main>
+
+  <!-- Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const chartBars = document.getElementById("chartBars");
+
+      // Dummy data: 6 tháng gần nhất
+      const revenues = [
+        { month: "04/2025", value: 120 },
+        { month: "05/2025", value: 140 },
+        { month: "06/2025", value: 135 },
+        { month: "07/2025", value: 160 },
+        { month: "08/2025", value: 145 },
+        { month: "09/2025", value: 150 }
+      ];
+
+      revenues.forEach(r => {
+        const bar = document.createElement("div");
+        bar.className = "chart-bar";
+        bar.style.height = (r.value * 1.2) + "px"; // scale
+        bar.innerHTML = `<span>${r.value}<br>${r.month}</span>`;
+        chartBars.appendChild(bar);
+      });
+    });
+  </script>
+</body>
+</html>

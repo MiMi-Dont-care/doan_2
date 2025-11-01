@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Chi tiết hợp đồng - Mì Cay Đức Hiệu</title>
+  <title>Danh sách người dùng - Mì Cay Đức Hiệu</title>
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/grid.css">
   <link rel="stylesheet" href="../css/color.css">
@@ -12,11 +12,9 @@
   <link rel="stylesheet" href="../css/flex.css">
   <link rel="stylesheet" href="../css/admin.css">
   <link rel="stylesheet" href="../css/store.css">
-  <link rel="stylesheet" href="../css/form.css">
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -36,7 +34,7 @@
             class="fas fa-chart-line"></i> Dashboard</a></li>
       <li><a href="store.html" style="color: white; text-decoration: none;"><i class="fas fa-store"></i> Quản lý cửa
           hàng</a></li>
-      <li class="active"><a href="contract.html" style="color: white; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp
+      <li><a href="contract.html" style="color: white; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp
           đồng</a></li>
       <li><a href="revenue.html" style="color: white; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh
           thu</a></li>
@@ -44,23 +42,49 @@
           mãi</a></li>
       <li><a href="report.html" style="color: white; text-decoration: none;"><i class="fas fa-chart-pie"></i> Báo
           cáo</a></li>
-      <li><a href="user.html" style="color: white; text-decoration: none;"><i class="fas fa-users"></i> Người dùng</a>
+      <li class="active"><a href="user.html" style="color: white; text-decoration: none;"><i class="fas fa-users"></i> Người dùng</a>
       </li>
     </ul>
   </aside>
 
   <!-- Main -->
   <main class="admin-main">
-    <h1 class="fs-2 fw-bold mb-3">Chi tiết hợp đồng</h1>
-    <div id="contractDetail" class="store-detail"></div>
-
-    <div class="form-actions mt-3">
-      <a href="contract.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Quay lại danh sách</a>
-      <a href="#" id="btnEdit" class="btn btn-warning"><i class="fas fa-edit"></i> Sửa</a>
-      <button id="btnDelete" class="btn btn-danger"><i class="fas fa-trash"></i> Xóa</button>
-      <a href="#" id="btnRenew" class="btn btn-primary" style="display:none;"><i class="fas fa-sync-alt"></i> Gia
-        hạn</a>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="fs-2 fw-bold">Danh sách người dùng</h1>
+      <div>
+        <button id="btnLoad" class="btn btn-secondary"><i class="fas fa-database"></i> Load dữ liệu</button>
+        <a href="user-create.html" class="btn btn-primary"><i class="fas fa-plus"></i> Tạo mới người dùng</a>
+      </div>
     </div>
+
+    <!-- Search -->
+    <div class="store-search mb-3 d-flex justify-content-between align-items-center">
+      <input type="text" id="searchInput" class="store-search__input"
+        placeholder="Tìm theo tên, email, SĐT hoặc role...">
+      <button id="btnSearch" class="btn btn-success"><i class="fas fa-search"></i> Tìm kiếm</button>
+    </div>
+
+    <!-- Table -->
+    <table class="report__table store-table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên</th>
+          <th>Email</th>
+          <th>SĐT</th>
+          <th>Role</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="userTableBody">
+        <tr>
+          <td colspan="6" class="text-center">Chưa có dữ liệu</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div id="pagination" class="pagination d-flex justify-content-center mt-3"></div>
   </main>
 
   <!-- Footer -->
@@ -68,8 +92,7 @@
     © 2025 Mì Cay Đức Hiệu - Admin System
   </footer>
 
-  <script src="../js/contract-detail.js"></script>
-  
+  <script src="../js/user.js"></script>
 </body>
 
 </html>

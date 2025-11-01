@@ -1,0 +1,249 @@
+/* ===== Franchisee Layout ===== */
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f6fa;
+}
+
+/* Header */
+.franchisee-header {
+  background: #0d6efd;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 1000;
+}
+.franchisee-header .logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.franchisee-header .user-menu {
+  cursor: pointer;
+  font-size: .95rem;
+}
+
+/* Sidebar */
+.franchisee-sidebar {
+  width: 220px;
+  background: #fff;
+  border-right: 1px solid #eee;
+  height: 100vh;
+  padding-top: 70px; /* tránh đè header */
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.franchisee-sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
+.franchisee-sidebar li {
+  padding: .85rem 1.2rem;
+  cursor: pointer;
+  font-size: .95rem;
+  color: #212529;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  transition: background .2s;
+}
+.franchisee-sidebar li:hover,
+.franchisee-sidebar li.active {
+  background: #e9f2ff;
+  color: #0d6efd;
+  font-weight: bold;
+}
+
+/* Main */
+.franchisee-main {
+  margin-left: 220px;
+  padding: 80px 1.5rem 2rem;
+}
+
+/* Dashboard cards */
+.franchisee-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.franchisee-card {
+  background: #fff;
+  border-radius: .75rem;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.05);
+  transition: transform .3s, box-shadow .3s;
+}
+.franchisee-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.1);
+}
+.franchisee-card i {
+  font-size: 2.5rem;
+  margin-bottom: .75rem;
+}
+.franchisee-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: .25rem;
+}
+.franchisee-card p {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.franchisee-card.blue i { color: #0d6efd; }
+.franchisee-card.green i { color: #198754; }
+.franchisee-card.orange i { color: #fd7e14; }
+.franchisee-card.red i { color: #dc3545; }
+
+/* ===== Revenue Chart ===== */
+.franchisee-chart {
+  background: #fff;
+  border-radius: .75rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.05);
+}
+
+.franchisee-chart h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  height: 200px;
+}
+
+.chart-bar {
+  flex: 1;
+  background: #0d6efd;
+  border-radius: .5rem .5rem 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  color: #fff;
+  font-weight: bold;
+  font-size: .9rem;
+  transition: all .3s;
+}
+
+.chart-bar:hover {
+  opacity: .9;
+  transform: translateY(-5px);
+}
+
+.chart-bar span {
+  transform: translateY(1.2rem);
+  color: #212529;
+}
+
+.form {
+  max-width: 600px;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: .5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: .25rem;
+}
+
+.form-group input, 
+.form-group select {
+  width: 100%;
+  padding: .5rem;
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: .5rem;
+}
+
+/* Base table */
+.franchisee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: .5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+
+.franchisee-table th,
+.franchisee-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+  font-size: .95rem;
+}
+
+.franchisee-table th {
+  background: #f1f3f5;
+  font-weight: bold;
+  text-align: left;
+}
+
+.franchisee-table tr:hover {
+  background: #f8f9fa;
+}
+
+/* Special columns */
+.franchisee-table td:first-child {
+  text-align: center;
+  width: 80px;
+}
+
+/* Number column */
+.franchisee-table td.amount {
+  /* text-align: right; */
+  font-weight: 600;
+  color: #198754;
+}
+
+/* Pagination */
+.franchisee-pagination {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.franchisee-pagination .btn {
+  margin: 0 .25rem;
+  padding: .4rem .8rem;
+  border: 1px solid #dee2e6;
+  /* background: #fff; */
+  cursor: pointer;
+  border-radius: .25rem;
+}
+
+.franchisee-pagination .btn.active {
+  background: #0d6efd;
+  color: #fff;
+  border-color: #0d6efd;
+}
+
+.franchisee-search__input {
+  flex: 1;
+  padding: .5rem;
+  border: 1px solid #ccc;
+  border-radius: .25rem;
+  margin-right: .5rem;
+}

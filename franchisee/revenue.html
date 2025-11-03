@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ghi nhận doanh thu hàng ngày - Chủ cửa hàng</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/grid.css">
+    <link rel="stylesheet" href="../css/color.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/button.css">
+    <link rel="stylesheet" href="../css/flex.css">
+    <link rel="stylesheet" href="../css/franchisee.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="franchisee-header">
+        <div class="logo"><i class="fas fa-store"></i> Mì Cay Đức Hiệu - CN Quận 1</div>
+        <div class="user-menu"><i class="fas fa-user-circle"></i> Nguyễn Văn Anh (Chủ cửa hàng)</div>
+    </header>
+
+  <!-- Sidebar -->
+  <aside class="franchisee-sidebar">
+    <ul>
+      <li><a href="dashboard.html" style="color: black; text-decoration: none;"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li class="active"><a href="revenue.html" style="color: black; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh thu</a></li>
+      <li><a href="contract.html" target="_blank" style="color: black; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp đồng</a></li>
+      <li><a href="promotion.html" style="color: black; text-decoration: none;"><i class="fas fa-tags"></i> Khuyến mãi</a></li>
+      <li><a href="notification.html" style="color: black; text-decoration: none;"><i class="fas fa-bell"></i> Thông báo</a></li>
+    </ul>
+  </aside>
+
+    <!-- Main -->
+    <main class="franchisee-main">
+        <h1 class="fs-2 fw-bold mb-3">Ghi nhận doanh thu hằng ngày</h1>
+
+        <!-- Form -->
+        <form id="revenueForm" class="form mb-3" style="max-width:500px;">
+            <div class="form-group">
+                <label for="date">Ngày</label>
+                <input type="date" id="date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Doanh thu (triệu)</label>
+                <input type="number" id="amount" class="form-control" min="0" step="0.1" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu</button>
+                <button type="reset" class="btn btn-secondary"><i class="fas fa-undo"></i> Nhập lại</button>
+            </div>
+        </form>
+
+        <!-- Bảng doanh thu -->
+        <div class="table-box mt-3">
+            <table class="franchisee-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Ngày</th>
+                        <th>Doanh thu (triệu)</th>
+                    </tr>
+                </thead>
+                <tbody id="revenueTableBody">
+                    <tr>
+                        <td colspan="3" class="text-center">Chưa có dữ liệu</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="franchisee-pagination"></div>
+    </main>
+
+    <script src="../js/revenue.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách khuyến mãi - Franchisee</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/grid.css">
+  <link rel="stylesheet" href="../css/color.css">
+  <link rel="stylesheet" href="../css/typography.css">
+  <link rel="stylesheet" href="../css/button.css">
+  <link rel="stylesheet" href="../css/flex.css">
+  <link rel="stylesheet" href="../css/franchisee.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="franchisee-header">
+    <div class="logo"><i class="fas fa-store"></i> Mì Cay Đức Hiệu - CN Quận 1</div>
+    <div class="user-menu"><i class="fas fa-user-circle"></i> Nguyễn Văn Anh (Chủ cửa hàng)</div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="franchisee-sidebar">
+    <ul>
+      <li><a href="dashboard.html" style="color: black; text-decoration: none;"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a href="revenue.html" style="color: black; text-decoration: none;"><i class="fas fa-dollar-sign"></i> Doanh thu</a></li>
+      <li><a href="contract.html" target="_blank" style="color: black; text-decoration: none;"><i class="fas fa-file-contract"></i> Hợp đồng</a></li>
+      <li class="active"><a href="promotion.html" style="color: black; text-decoration: none;"><i class="fas fa-tags"></i> Khuyến mãi</a></li>
+      <li><a href="notification.html" style="color: black; text-decoration: none;"><i class="fas fa-bell"></i> Thông báo</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main class="franchisee-main">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="fs-2 fw-bold">Danh sách khuyến mãi</h1>
+    </div>
+
+    <!-- Search -->
+    <div class="store-search mb-3 d-flex justify-content-between align-items-center">
+      <input type="text" id="searchInput" class="franchisee-search__input" placeholder="Tìm kiếm theo tên, mã KM,...">
+      <button id="btnSearch" class="btn btn-success"><i class="fas fa-search"></i> Tìm kiếm</button>
+    </div>
+
+    <!-- Table -->
+    <table class="franchisee-table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Mã KM</th>
+          <th>Tên chương trình</th>
+          <th>Thời gian</th>
+          <th>Hình thức</th>
+          <th>Đối tượng</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody id="promotionTableBody">
+        <tr>
+          <td colspan="7" class="text-center">Chưa có dữ liệu</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div id="pagination" class="franchisee-pagination"></div>
+  </main>
+
+  <script src="../js/promotion.js"></script>
+</body>
+
+</html>

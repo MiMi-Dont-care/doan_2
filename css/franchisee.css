@@ -247,3 +247,104 @@ body {
   border-radius: .25rem;
   margin-right: .5rem;
 }
+
+/* ===========================
+   USER MENU (HEADER)
+=========================== */
+.franchisee-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f7f7;
+  color: #333;
+  padding: 12px 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  position: relative;
+  z-index: 100;
+}
+
+.franchisee-header .logo {
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0d6efd;
+}
+
+.franchisee-header .user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #333;
+}
+
+.franchisee-header .user-menu i {
+  font-size: 22px;
+  color: #0d6efd;
+}
+
+/* Dropdown */
+.franchisee-header .user-dropdown {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 1000;
+  overflow: hidden;
+  animation: fadeIn 0.15s ease-in-out;
+}
+
+/* Hiển thị khi hover */
+.franchisee-header .user-menu:hover .user-dropdown {
+  display: flex;
+}
+
+/* Các item trong menu */
+.franchisee-header .user-dropdown a {
+  padding: 10px 16px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.franchisee-header .user-dropdown a:hover {
+  background: #f2f6ff;
+  color: #0d6efd;
+}
+
+/* Icon trong menu */
+.franchisee-header .user-dropdown a i {
+  width: 18px;
+  text-align: center;
+  color: #0d6efd;
+}
+
+/* Nút đăng xuất */
+.franchisee-header .user-dropdown a.logout {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.franchisee-header .user-dropdown a.logout:hover {
+  background: #ffe8e8;
+  color: #b31d2e;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

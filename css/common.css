@@ -254,3 +254,66 @@ body {
   border-radius: .25rem;
   margin-right: .5rem;
 }
+
+    /* --- Profile menu --- */
+    .user-menu {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .user-menu i {
+      font-size: 22px;
+    }
+
+    .user-dropdown {
+      position: absolute;
+      top: 110%;
+      right: 0;
+      background: #fff;
+      color: #333;
+      border-radius: 6px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      min-width: 180px;
+      z-index: 1000;
+      padding: 5px 0;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .user-menu:hover .user-dropdown {
+      display: flex;
+    }
+
+    .user-dropdown a {
+      padding: 10px 16px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-dropdown a:hover {
+      background: #f1f1f1;
+    }
+
+    .user-dropdown a i {
+      width: 18px;
+      text-align: center;
+    }
+
+    /* Optional: highlight logout */
+    .user-dropdown a.logout {
+      color: #dc3545;
+      font-weight: 600;
+    }
+
+    .user-dropdown a.logout:hover {
+      background: #ffe8e8;
+    }

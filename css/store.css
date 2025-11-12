@@ -1,12 +1,3 @@
-/* Store search */
-.store-search__input {
-  flex: 1;
-  padding: .5rem;
-  border: 1px solid #ccc;
-  border-radius: .25rem;
-  margin-right: .5rem;
-}
-
 /* Store table */
 .store-table th, .store-table td {
   font-size: .9rem;

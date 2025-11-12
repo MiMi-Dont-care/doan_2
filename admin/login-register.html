@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập & Đăng ký - Mì Cay Đức Hiệu</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/grid.css">
+    <link rel="stylesheet" href="css/color.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/flex.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            background: linear-gradient(120deg, #0d6efd, #4ca9ff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .auth-container {
+            background: #fff;
+            width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Left: banner / image */
+        .auth-banner {
+            background: url('images/login-bg.jpg') center/cover no-repeat;
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            flex-direction: column;
+            padding: 40px;
+        }
+
+        .auth-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .auth-banner h1 {
+            position: relative;
+            font-size: 1.8rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+
+        .auth-banner p {
+            position: relative;
+            font-size: 1rem;
+            z-index: 2;
+            margin-top: 10px;
+        }
+
+        /* Right: form area */
+        .auth-form-box {
+            flex: 1;
+            padding: 50px 40px;
+            position: relative;
+        }
+
+        .auth-tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: #555;
+            transition: all 0.3s ease;
+        }
+
+        .auth-tab.active {
+            color: #0d6efd;
+            border-bottom: 3px solid #0d6efd;
+        }
+
+        form {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #0d6efd;
+            outline: none;
+            box-shadow: 0 0 3px rgba(13, 110, 253, 0.4);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            border-radius: 6px;
+            background: #0d6efd;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #0959d0;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .auth-footer a {
+            color: #0d6efd;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <!-- Banner -->
+        <div class="auth-banner">
+            <h1>Mì Cay Đức Hiệu</h1>
+            <p>Đăng nhập hoặc đăng ký để bắt đầu hành trình nhượng quyền!</p>
+        </div>
+
+        <!-- Form box -->
+        <div class="auth-form-box">
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="loginTab">Đăng nhập</div>
+                <div class="auth-tab" id="registerTab">Đăng ký</div>
+            </div>
+
+            <!-- Form login -->
+            <form id="loginForm" class="active">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="Nhập email...">
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Mật khẩu</label>
+                    <input type="password" id="loginPassword" required placeholder="Nhập mật khẩu...">
+                </div>
+
+                <button type="submit" class="btn-primary"><i class="fas fa-sign-in-alt"></i> Đăng nhập</button>
+
+                <div class="auth-footer">
+                    <a href="forgot-password.html">Quên mật khẩu?</a>
+                </div>
+
+                <br>
+                <a href="index.html" style="text-decoration: none; color: #0959d0;">Về trang chủ</a>
+            </form>
+
+            <!-- Form register -->
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regName">Họ và tên</label>
+                    <input type="text" id="regName" required placeholder="Nhập họ và tên...">
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" required placeholder="Nhập email...">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPhone">Số điện thoại</label>
+                    <input type="text" id="regPhone" required placeholder="Nhập số điện thoại...">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Mật khẩu</label>
+                    <input type="password" id="regPassword" required minlength="6" placeholder="Nhập mật khẩu...">
+                </div>
+
+                <div class="form-group">
+                    <label for="regConfirm">Xác nhận mật khẩu</label>
+                    <input type="password" id="regConfirm" required placeholder="Nhập lại mật khẩu...">
+                </div>
+
+                <button type="submit" class="btn-primary"><i class="fas fa-user-plus"></i> Đăng ký</button>
+
+                <br>
+                <a href="index.html" style="text-decoration: none; color: #0959d0;">Về trang chủ</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script>
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            loginForm.classList.add('active');
+            registerForm.classList.remove('active');
+        });
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('active');
+            loginTab.classList.remove('active');
+            registerForm.classList.add('active');
+            loginForm.classList.remove('active');
+        });
+
+        loginForm.addEventListener('submit', e => {
+            e.preventDefault();
+            alert('Đăng nhập thành công!');
+            window.location.href = "admin/dashboard.html";
+        });
+
+        registerForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const pass = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirm').value;
+            if (pass !== confirm) {
+                alert('Mật khẩu xác nhận không khớp!');
+                return;
+            }
+            alert('Đăng ký thành công! Bạn có thể đăng nhập.');
+            loginTab.click();
+        });
+    </script>
+</body>
+
+</html>
